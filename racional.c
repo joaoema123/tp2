@@ -74,6 +74,19 @@ struct racional simplifica_r (struct racional r)
 
 /* implemente as demais funções de racional.h aqui */
 
+/* Retorna o numerador do racional r */
+long numerador_r (struct racional r)
+{
+return r.num;
+}
+
+/* Retorna o denominador do racional r */
+long denominador_r (struct racional r)
+{
+  return r.den;
+}
+
+
 /* Cria um número racional com o numerador e denominador indicados. */
 struct racional cria_r (long numerador, long denominador) {
   struct racional r;
@@ -134,17 +147,17 @@ void imprime_r (struct racional r) {
  * -1 se r1 < r2, 0 se r1 = r2 ou 1 se r1 > r2 */
 int compara_r (struct racional r1, struct racional r2){
 
-  int r1_compara, r2_compara;
+  int a, b;
 
   if (valido_r (r1) == 0 || valido_r (r2) == 0)
     return -2;
 
-  r1_compara = r1.num * mmc (r1.den, r2.den) / r1.den;
-  r2_compara = r2.num * mmc (r1.den, r2.den) / r2.den;
+  a = r1.num * r2.den;
+  b = r2.num * r1.den;
 
-  if (r1_compara < r2_compara) 
+  if (a < b) 
     return -1;
-  if (r1_compara == r2_compara)
+  if (a == b)
     return 0;
   else return 1;
     
@@ -155,13 +168,13 @@ int compara_r (struct racional r1, struct racional r2){
  *         0 se r1 ou r2 for inválido ou se *r3 for nulo */
 int soma_r (struct racional r1, struct racional r2, struct racional *r3)
 {
+  struct racional r;
+  r.num = r1.num * r2.den + r2.num * r1.den;
+  r.den = r1.den * r2.den; 
 
-  r3->num = r1.num * r2.den + r2.num * r1.den;
-  r3->den = r1.den * r2.den; 
+  *r3 = simplifica_r (r);
 
-  simplifica_r (r3);
-
-  if (valido_r (r1) == 0 || valido_r (r2) == 0 || *r3 == 0)
+  if (valido_r (r1) == 0 || valido_r (r2) == 0 || r.num  == 0)
     return 0;
 
   return 1; //cai nesse caso caso nao caia no caso anterior
@@ -177,12 +190,12 @@ int subtrai_r (struct racional r1, struct racional r2, struct racional *r3)
 {
   struct racional r;
 
-  r3->num = r1.num * r2.den - r2.num * r1.den;
-  r3->den = r1.den * r2.den; 
+  r.num = r1.num * r2.den - r2.num * r1.den;
+  r.den = r1.den * r2.den; 
 
-  simplifica_r (r3);
+  *r3 = simplifica_r (r);
 
-  if (valido_r (r1) == 0 || valido_r (r2) == 0 || *r3 == 0)
+  if (valido_r (r1) == 0 || valido_r (r2) == 0 || r.num == 0)
     return 0;
     
   return 1; //cai nesse caso caso nao caia no caso anterior
@@ -197,12 +210,12 @@ int multiplica_r (struct racional r1, struct racional r2, struct racional *r3)
 {
   struct racional r;
 
-  r3->num = r1.num * r2.num;
-  r3->den = r1.den * r2.den; 
+  r.num = r1.num * r2.num;
+  r.den = r1.den * r2.den; 
 
-  simplifica_r (r3);
+  *r3 = simplifica_r (r);
 
-  if (valido_r (r1) == 0 || valido_r (r2) == 0 || *r3 == 0)
+  if (valido_r (r1) == 0 || valido_r (r2) == 0 || r.num == 0)
     return 0;
     
   return 1; //cai nesse caso caso nao caia no caso anterior
@@ -215,12 +228,12 @@ int divide_r (struct racional r1, struct racional r2, struct racional *r3)
 {
   struct racional r;
 
-  r3->num = r1.num * r2.den;
-  r3->den = r1.den * r2.num; 
+  r.num =  r1.num * r2.den;
+  r.den = r1.den * r2.num; 
 
-  simplifica_r (r3);
+  *r3 = simplifica_r (r);
 
-  if (valido_r (r1) == 0 || valido_r (r2) == 0 || *r3 == 0)
+  if (valido_r (r1) == 0 || valido_r (r2) == 0 || r.num == 0)
     return 0;
     
   return 1; //cai nesse caso caso nao caia no caso anterior
