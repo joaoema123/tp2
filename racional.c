@@ -152,15 +152,19 @@ int compara_r (struct racional r1, struct racional r2){
   if (valido_r (r1) == 0 || valido_r (r2) == 0)
     return -2;
 
-  a = r1.num * r2.den;
-  b = r2.num * r1.den;
+  r1 = simplifica_r (r1);
+  r2 = simplifica_r (r2);
 
-  if (a < b) 
+  a = r1.num * r2.den;
+  b = r1.den * r2.num;
+
+  if (a < b)
     return -1;
-  if (a == b)
-    return 0;
-  else return 1;
-    
+  if (a > b)
+    return 1;
+  else return 0;
+
+
 }
 
 /* Retorna a soma dos racionais r1 e r2 no parametro *r3.

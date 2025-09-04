@@ -25,24 +25,38 @@ void ordena_vetor (struct racional vet [], int tam)
   struct racional aux;
   int i, j, pos_menor;
 
-  for (i = 0; i < tam-2; i++){
+  for (i = 0; i < tam-1; i++){
     
     pos_menor = i;
 
-    for (j = i + 1; j <= tam; j++) 
+    for (j = i + 1; j < tam; j++) 
       if (compara_r (vet [j], vet [pos_menor]) == -1)
         pos_menor = j;
 
-    aux.num = vet [pos_menor].num;
-    aux.den = vet [pos_menor].den;
-
-    vet [pos_menor].num = vet [i].num;
-    vet [pos_menor].den = vet [i].den;
+    aux = vet[i];
+   
+    vet[pos_menor] = vet[i];
     
-    vet[i].num = aux.num;
-    vet [i].den = aux.den;
+    vet[i] = aux;
     
   }
+}
+
+struct racional calcula_soma (struct racional vet[], int n)
+{
+  struct racional r;
+  long soma_numerador, soma_denominador;
+  int i;
+
+  for (i = 0, soma_numerador = 0; i < n; i++)
+    soma_numerador = soma_numerador + vet[i].num;
+  for (i = 0, soma_denominador = 0; i < n; i++)
+    soma_denominador = soma_denominador + vet[i].den;
+  r = cria_r (soma_numerador, soma_denominador);
+  
+  return simplifica_r (r);
+
+
 }
 
 
@@ -50,12 +64,14 @@ void ordena_vetor (struct racional vet [], int tam)
 int main ()
 {
   struct racional vet [99];
+  struct racional soma;
   int n, i;
+  long den, num;
   scanf ("%d", &n);
 
   for (i = 0; i < n; i++) {
-    scanf ("%ld %ld", &vet[i].num, &vet[i].den);
-    cria_r (vet[i].num, vet[i].den);
+    scanf ("%ld %ld", &num, &den);
+    vet[i] = cria_r (num, den);
   }
 
 
@@ -95,6 +111,16 @@ int main ()
   }
 
   printf ("\n");
+
+  soma = calcula_soma (vet, n);
+  
+  printf ("SOMA = ");
+
+  imprime_r (soma);
+
+  printf ("\n");
+
+ 
 
   return (0) ;
 }
