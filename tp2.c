@@ -88,6 +88,9 @@ int main ()
       remove_invalido (vet, &n, i); //função que remove elementos invalidos
   }
 
+  if (n == 1 && !valido_r (vet[0])) // caso adicional em que o único elemento do vetor é um NaN
+    remove_invalido (vet, &n, 0);
+
    printf ("VETOR = ");
 
   for (i = 0; i < n; i++) {
@@ -110,7 +113,15 @@ int main ()
 
   printf ("\n");
 
+
+
   soma = calcula_soma (vet, n);
+
+  if (n == 0) { // caso em que o vetor não tem elementos 
+    soma.num = 0;
+    soma.den = 1;
+  }
+    
   
   printf ("SOMA = ");
 
