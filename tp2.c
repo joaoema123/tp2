@@ -11,6 +11,7 @@
 
 /* coloque aqui as funções auxiliares que precisar neste arquivo */
 
+
 void remove_invalido (struct racional vet[], int *tam, int pos) //passa o tamanho por "referencia" para diminuí-lo depois de remover o elemento
 {
   int i;
@@ -33,7 +34,7 @@ void ordena_vetor (struct racional vet [], int tam)
       if (compara_r (vet [j], vet [pos_menor]) == -1)
         pos_menor = j;
 
-    aux = vet[i];
+    aux = vet[pos_menor];
    
     vet[pos_menor] = vet[i];
     
@@ -44,17 +45,14 @@ void ordena_vetor (struct racional vet [], int tam)
 
 struct racional calcula_soma (struct racional vet[], int n)
 {
-  struct racional r;
-  long soma_numerador, soma_denominador;
-  int i;
-
-  for (i = 0, soma_numerador = 0; i < n; i++)
-    soma_numerador = soma_numerador + vet[i].num;
-  for (i = 0, soma_denominador = 0; i < n; i++)
-    soma_denominador = soma_denominador + vet[i].den;
-  r = cria_r (soma_numerador, soma_denominador);
+  int i = 1;
+  struct racional r = vet [0];
+    while (i < n) {
+    soma_r (r, vet[i], &r);
+    i++;
+    }
+  return r;
   
-  return simplifica_r (r);
 
 
 }
@@ -118,7 +116,7 @@ int main ()
 
   imprime_r (soma);
 
-  printf ("\n");
+  printf ("\n"); 
 
  
 
